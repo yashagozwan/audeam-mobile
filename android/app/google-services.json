@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "972177140205",
+    "project_id": "audeam-app",
+    "storage_bucket": "audeam-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972177140205:android:3f137a7d7c3531bbc89fe4",
+        "android_client_info": {
+          "package_name": "com.yashagozwan.audeam_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972177140205-9mos8mghirm5bik227i9762goplij4e8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApU67jzirnVJasA7-Ysu88u7h_RCuwqI0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972177140205-9mos8mghirm5bik227i9762goplij4e8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
