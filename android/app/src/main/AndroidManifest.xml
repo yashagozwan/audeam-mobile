@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yashagozwan.audeam_mobile">
    <application
-        android:label="audeam_mobile"
+        android:label="Audeam"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

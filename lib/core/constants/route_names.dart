@@ -1,4 +1,5 @@
 class RouteNames {
-  static const home = '/';
-  static const splash = '/splash';
+  static const home = '/home';
+  static const splash = '/';
+  static const recognizing = '/recognizing';
 }
