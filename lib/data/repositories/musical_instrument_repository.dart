@@ -1,11 +1,8 @@
-import 'package:audeam_mobile/data/interfaces/musical_instrument.dart';
-import 'package:audeam_mobile/data/models/musical_instrument_model.dart';
-import 'package:audeam_mobile/data/providers/musica_instrumentl_provider.dart';
+import 'package:audeam_mobile/data/models/models.dart';
+import 'package:audeam_mobile/data/providers/providers.dart';
 
-class MusicalInstrumentRepository implements MusicalInstrument {
-  final _musicalInstrumentProvider = MusicalInstrumentProvider();
+class MusicalInstrumentRepository {
+  final _provider = MusicalInstrumentProvider();
 
-  @override
-  Future<MusicalInstrumentModel?> findOne(String query) =>
-      _musicalInstrumentProvider.findOne(query);
+  Future<Iterable<MusicalInstrument>> findAll() => _provider.findAll();
 }

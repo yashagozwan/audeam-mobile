@@ -1,11 +1,7 @@
-import 'package:audeam_mobile/app.dart';
-import 'package:audeam_mobile/core/constants/route_names.dart';
+import 'package:audeam_mobile/core/constants/route_name.dart';
 import 'package:audeam_mobile/core/constants/string_resources.dart';
 import 'package:audeam_mobile/core/constants/svg_asset_path.dart';
-import 'package:audeam_mobile/data/interfaces/musical_instrument.dart';
-import 'package:audeam_mobile/data/models/musical_instrument_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -26,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(milliseconds: 3000),
       () => Navigator.pushNamedAndRemoveUntil(
         context,
-        RouteNames.home,
+        RouteName.home,
         (route) => false,
       ),
     );

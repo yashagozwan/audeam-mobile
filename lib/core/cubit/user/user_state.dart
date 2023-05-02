@@ -1,3 +1,0 @@
-class UserState {
-  const UserState();
-}

@@ -11,5 +11,5 @@ class CustomColors {
     return MaterialColor(colorValue, shades);
   }
 
-  static final primary = _getMaterialColor(0xFFD7263D);
+  static final primary = _getMaterialColor(0xFF000000);
 }

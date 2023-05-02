@@ -1,5 +1,4 @@
 import 'package:audeam_mobile/app.dart';
-import 'package:audeam_mobile/core/services/firebase_service.dart';
 import 'package:audeam_mobile/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

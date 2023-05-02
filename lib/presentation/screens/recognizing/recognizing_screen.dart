@@ -1,5 +1,4 @@
 import 'package:audeam_mobile/core/constants/custom_colors.dart';
-import 'package:audeam_mobile/data/models/musical_instrument_model.dart';
 import 'package:flutter/material.dart';
 
 class RecognizingScreen extends StatefulWidget {
@@ -42,7 +41,7 @@ class _RecognizingScreenState extends State<RecognizingScreen> {
               child: Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: CustomColors.primary.shade300,
+                  color: Theme.of(context).primaryColor,
                   shape: BoxShape.circle,
                 ),
                 child: MaterialButton(
