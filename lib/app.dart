@@ -1,6 +1,6 @@
-import 'package:audeam_mobile/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:audeam_mobile/core/theme/theme.dart';
 import 'package:audeam_mobile/presentation/screens/screens.dart';
 import 'package:audeam_mobile/core/constants/constants.dart';
 
