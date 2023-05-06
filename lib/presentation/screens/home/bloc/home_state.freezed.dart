@@ -23,6 +23,8 @@ mixin _$HomeState {
   Status get status => throw _privateConstructorUsedError;
   Iterable<MusicalInstrument> get instruments =>
       throw _privateConstructorUsedError;
+  Iterable<MusicalInstrument> get histories =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +37,10 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({Status status, Iterable<MusicalInstrument> instruments});
+  $Res call(
+      {Status status,
+      Iterable<MusicalInstrument> instruments,
+      Iterable<MusicalInstrument> histories});
 }
 
 /// @nodoc
@@ -53,6 +58,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   $Res call({
     Object? status = null,
     Object? instruments = null,
+    Object? histories = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -62,6 +68,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
       instruments: null == instruments
           ? _value.instruments
           : instruments // ignore: cast_nullable_to_non_nullable
+              as Iterable<MusicalInstrument>,
+      histories: null == histories
+          ? _value.histories
+          : histories // ignore: cast_nullable_to_non_nullable
               as Iterable<MusicalInstrument>,
     ) as $Val);
   }
@@ -74,7 +84,10 @@ abstract class _$$_HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
       __$$_HomeStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Status status, Iterable<MusicalInstrument> instruments});
+  $Res call(
+      {Status status,
+      Iterable<MusicalInstrument> instruments,
+      Iterable<MusicalInstrument> histories});
 }
 
 /// @nodoc
@@ -90,6 +103,7 @@ class __$$_HomeStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? instruments = null,
+    Object? histories = null,
   }) {
     return _then(_$_HomeState(
       status: null == status
@@ -100,6 +114,10 @@ class __$$_HomeStateCopyWithImpl<$Res>
           ? _value.instruments
           : instruments // ignore: cast_nullable_to_non_nullable
               as Iterable<MusicalInstrument>,
+      histories: null == histories
+          ? _value.histories
+          : histories // ignore: cast_nullable_to_non_nullable
+              as Iterable<MusicalInstrument>,
     ));
   }
 }
@@ -108,7 +126,9 @@ class __$$_HomeStateCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_HomeState implements _HomeState {
   const _$_HomeState(
-      {this.status = Status.initial, this.instruments = const []});
+      {this.status = Status.initial,
+      this.instruments = const [],
+      this.histories = const []});
 
   factory _$_HomeState.fromJson(Map<String, dynamic> json) =>
       _$$_HomeStateFromJson(json);
@@ -119,10 +139,13 @@ class _$_HomeState implements _HomeState {
   @override
   @JsonKey()
   final Iterable<MusicalInstrument> instruments;
+  @override
+  @JsonKey()
+  final Iterable<MusicalInstrument> histories;
 
   @override
   String toString() {
-    return 'HomeState(status: $status, instruments: $instruments)';
+    return 'HomeState(status: $status, instruments: $instruments, histories: $histories)';
   }
 
   @override
@@ -132,13 +155,17 @@ class _$_HomeState implements _HomeState {
             other is _$_HomeState &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality()
-                .equals(other.instruments, instruments));
+                .equals(other.instruments, instruments) &&
+            const DeepCollectionEquality().equals(other.histories, histories));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, status, const DeepCollectionEquality().hash(instruments));
+      runtimeType,
+      status,
+      const DeepCollectionEquality().hash(instruments),
+      const DeepCollectionEquality().hash(histories));
 
   @JsonKey(ignore: true)
   @override
@@ -157,7 +184,8 @@ class _$_HomeState implements _HomeState {
 abstract class _HomeState implements HomeState {
   const factory _HomeState(
       {final Status status,
-      final Iterable<MusicalInstrument> instruments}) = _$_HomeState;
+      final Iterable<MusicalInstrument> instruments,
+      final Iterable<MusicalInstrument> histories}) = _$_HomeState;
 
   factory _HomeState.fromJson(Map<String, dynamic> json) =
       _$_HomeState.fromJson;
@@ -166,6 +194,8 @@ abstract class _HomeState implements HomeState {
   Status get status;
   @override
   Iterable<MusicalInstrument> get instruments;
+  @override
+  Iterable<MusicalInstrument> get histories;
   @override
   @JsonKey(ignore: true)
   _$$_HomeStateCopyWith<_$_HomeState> get copyWith =>

@@ -25,9 +25,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.copyWith(status: Status.loading));
     try {
       final instruments = await _repository.findAll();
+      final histories = await _repository.findAllLocal();
+
       emit(state.copyWith(
         status: Status.success,
         instruments: instruments,
+        histories: histories,
       ));
     } on FirebaseException {
       emit(state.copyWith(status: Status.failure));

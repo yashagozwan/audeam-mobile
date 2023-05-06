@@ -23,4 +23,12 @@ class MusicalInstrumentProvider {
       return instrument.copyWith(id: e.id);
     });
   }
+
+  Future<MusicalInstrument> findByName(String name) async {
+    final result = await collection.where('name', isEqualTo: name).get();
+    return result.docs.map((e) {
+      final instrument = MusicalInstrument.fromJson(e.data());
+      return instrument.copyWith(id: e.id);
+    }).first;
+  }
 }

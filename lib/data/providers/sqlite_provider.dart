@@ -1,27 +1,48 @@
-import 'package:path_provider/path_provider.dart';
+import 'package:audeam_mobile/data/models/models.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as path;
 
 class SqliteProvider {
-  static Database? _database;
+  static const histories = 'histories';
+
+  static SqliteProvider? _sqliteProvider;
 
   SqliteProvider._instance();
 
-  Future<Database> get database async {
-    const dbName = 'my_database.db';
-    final directory = await getApplicationDocumentsDirectory();
-    final path = directory.path + dbName;
-    final db = await openDatabase(path, version: 1, onCreate: _onCreate);
-    return db;
+  factory SqliteProvider() => _sqliteProvider ??= SqliteProvider._instance();
+
+  Future<Database> get _database async {
+    final directory = path.join(await getDatabasesPath(), 'my_database.db');
+    return await openDatabase(directory, version: 1, onCreate: _onCreate);
   }
 
   void _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE history(
+      CREATE TABLE $histories(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        description TEXT,
-        image TEXT
+        name TEXT NOT NULL,
+        description TEXT NOT NULL,
+        image TEXT NOT NULL
       )
     ''');
+  }
+
+  Future<int> insertOne(MusicalInstrument instrument) async {
+    final db = await _database;
+    final data = instrument.toJson();
+    data.remove('id');
+    final result = await db.insert(
+      histories,
+      data,
+      conflictAlgorithm: ConflictAlgorithm.abort,
+    );
+
+    return result;
+  }
+
+  Future<Iterable<MusicalInstrument>> findAll() async {
+    final db = await _database;
+    final instruments = await db.query(histories);
+    return instruments.map((e) => MusicalInstrument.fromMap(e));
   }
 }

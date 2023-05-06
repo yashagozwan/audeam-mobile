@@ -47,5 +47,43 @@ void main() {
         print(e);
       });
     });
+
+    test('find by text', () async {
+      final collection =
+          firestore.collection(StringResources.musicalInstrument);
+
+      const instrument = MusicalInstrument(
+        name: 'Guitar',
+        description: 'This cool',
+        image: 'image',
+      );
+
+      const instrument2 = MusicalInstrument(
+        name: 'Piano',
+        description: 'This cool',
+        image: 'image',
+      );
+
+      final map = instrument.toJson();
+      map.remove('id');
+
+      final map2 = instrument2.toJson();
+      map2.remove('id');
+
+      await collection.add(map);
+      await collection.add(map2);
+
+      final result = await collection.where('name', isEqualTo: 'get').get();
+
+      try {
+        final data = result.docs.map((e) {
+          final instrument = MusicalInstrument.fromJson(e.data());
+          return instrument.copyWith(id: e.id);
+        }).first;
+        print(data);
+      } catch (error) {
+        print(error);
+      }
+    });
   });
 }

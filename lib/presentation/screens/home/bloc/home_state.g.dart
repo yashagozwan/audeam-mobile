@@ -12,12 +12,16 @@ _$_HomeState _$$_HomeStateFromJson(Map<String, dynamic> json) => _$_HomeState(
       instruments: (json['instruments'] as List<dynamic>?)?.map(
               (e) => MusicalInstrument.fromJson(e as Map<String, dynamic>)) ??
           const [],
+      histories: (json['histories'] as List<dynamic>?)?.map(
+              (e) => MusicalInstrument.fromJson(e as Map<String, dynamic>)) ??
+          const [],
     );
 
 Map<String, dynamic> _$$_HomeStateToJson(_$_HomeState instance) =>
     <String, dynamic>{
       'status': _$StatusEnumMap[instance.status]!,
       'instruments': instance.instruments.toList(),
+      'histories': instance.histories.toList(),
     };
 
 const _$StatusEnumMap = {

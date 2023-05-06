@@ -160,7 +160,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding:
                                         const EdgeInsets.fromLTRB(16, 0, 16, 0),
                                     child: ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        context.read<DetailBloc>().add(
+                                              DetailGetInstrument(
+                                                name: instrument.name,
+                                              ),
+                                            );
+
+                                        Navigator.pushNamed(
+                                          context,
+                                          RouteName.detail,
+                                        );
+                                      },
                                       child: const Text('View'),
                                     ),
                                   ),

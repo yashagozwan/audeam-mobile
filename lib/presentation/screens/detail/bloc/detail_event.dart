@@ -9,10 +9,10 @@ class DetailReset extends DetailEvent {
   const DetailReset();
 }
 
-class DetailGetInstrument {
-  final String instrumentName;
+class DetailGetInstrument extends DetailEvent {
+  final String name;
 
   const DetailGetInstrument({
-    required this.instrumentName,
+    required this.name,
   });
 }

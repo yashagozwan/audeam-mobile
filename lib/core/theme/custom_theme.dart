@@ -8,7 +8,7 @@ class CustomTheme {
       fontFamily: 'Inter',
     );
 
-    final card = themeData.cardTheme.copyWith(
+    final cardTheme = themeData.cardTheme.copyWith(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -22,10 +22,20 @@ class CustomTheme {
       ),
     );
 
+    final outlinedButton = OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: CustomColors.primary),
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+    );
+
     return themeData.copyWith(
       scaffoldBackgroundColor: Colors.grey.shade50,
       elevatedButtonTheme: elevatedButton,
-      cardTheme: card,
+      cardTheme: cardTheme,
+      outlinedButtonTheme: outlinedButton,
     );
   }
 }
