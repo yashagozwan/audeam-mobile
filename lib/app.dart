@@ -1,4 +1,3 @@
-import 'package:audeam_mobile/presentation/screens/detail/bloc/detail_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:audeam_mobile/core/theme/theme.dart';
@@ -14,6 +13,7 @@ class App extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => HomeBloc()),
         BlocProvider(create: (context) => DetailBloc()),
+        BlocProvider(create: (context) => RecognizingBloc()),
       ],
       child: MaterialApp(
         theme: CustomTheme.light,
@@ -24,6 +24,7 @@ class App extends StatelessWidget {
           RouteName.splash: (context) => const SplashScreen(),
           RouteName.recognizing: (context) => const RecognizingScreen(),
           RouteName.detail: (context) => const DetailScreen(),
+          RouteName.notFound: (context) => const NotFoundScreen(),
         },
       ),
     );

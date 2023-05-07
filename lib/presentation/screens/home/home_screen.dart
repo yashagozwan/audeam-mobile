@@ -1,4 +1,5 @@
 import 'package:audeam_mobile/core/constants/constants.dart';
+import 'package:audeam_mobile/data/models/models.dart';
 import 'package:audeam_mobile/presentation/screens/screens.dart';
 import 'package:audeam_mobile/presentation/widgets/custom_app_bar.dart';
 import 'package:audeam_mobile/presentation/widgets/touchable.dart';
@@ -93,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               final status = state.status;
-              final instruments = state.instruments;
+              final instruments = state.instruments.toList().sublist(0, 4);
 
               if (status == Status.loading) {
                 return const Center(child: CircularProgressIndicator());
@@ -159,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Padding(
                                     padding:
                                         const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                                    child: ElevatedButton(
+                                    child: OutlinedButton(
                                       onPressed: () {
                                         context.read<DetailBloc>().add(
                                               DetailGetInstrument(
@@ -240,6 +241,178 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          const SizedBox(height: 16),
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              var instruments = <MusicalInstrument>[];
+              final histories = state.histories;
+
+              if (histories.isNotEmpty) {
+                instruments =
+                    histories.toList().reversed.toList().sublist(0, 4);
+              }
+
+              if (instruments.isEmpty) {
+                return Card(
+                  margin: const EdgeInsets.all(16),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.do_not_disturb_alt_rounded,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Empty',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+              return SizedBox(
+                height: 120,
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        final history = instruments.elementAt(index);
+                        return SizedBox(
+                          width: 300,
+                          child: GestureDetector(
+                            onTap: () {
+                              context.read<DetailBloc>().add(
+                                    DetailGetInstrument(
+                                      name: history.name,
+                                    ),
+                                  );
+
+                              Navigator.pushNamed(context, RouteName.detail);
+                            },
+                            child: Card(
+                              clipBehavior: Clip.hardEdge,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.all(16),
+                                    width: 100,
+                                    height: 100,
+                                    child: Image.network(
+                                      history.image,
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 16, 16, 16),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            history.name,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                          const SizedBox(height: 8),
+                                          Text(
+                                            history.description,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.copyWith(color: Colors.grey),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.horizontal(
+                                        right: Radius.circular(16),
+                                      ),
+                                    ),
+                                    child: const Icon(
+                                      Icons.chevron_right_outlined,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 8),
+                      itemCount: instruments.length,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          RouteName.instruments,
+                        );
+                      },
+                      child: Card(
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: const Offset(3, 3),
+                                      blurRadius: 8,
+                                      color: Colors.grey.shade300,
+                                    ),
+                                  ],
+                                ),
+                                child: Icon(
+                                  Icons.chevron_right_outlined,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 50),
         ],
       ),
     );

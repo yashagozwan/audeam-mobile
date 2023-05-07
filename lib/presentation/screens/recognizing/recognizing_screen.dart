@@ -1,7 +1,10 @@
-import 'package:audeam_mobile/core/constants/custom_colors.dart';
+import 'package:audeam_mobile/core/constants/constants.dart';
 import 'package:audeam_mobile/core/constants/image_asset_path.dart';
+import 'package:audeam_mobile/core/services/tflite_service.dart';
+import 'package:audeam_mobile/presentation/screens/screens.dart';
 import 'package:audeam_mobile/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RecognizingScreen extends StatefulWidget {
   const RecognizingScreen({Key? key}) : super(key: key);
@@ -11,12 +14,52 @@ class RecognizingScreen extends StatefulWidget {
 }
 
 class _RecognizingScreenState extends State<RecognizingScreen> {
-  Future<void> _initial() async {}
+  bool _recording = false;
+  Stream<Map<dynamic, dynamic>>? result;
+
+  Future<void> _initial() async {
+    TfliteService.loadModel();
+  }
 
   @override
   void initState() {
     _initial();
     super.initState();
+  }
+
+  void _recorder() {
+    String recognition = "";
+
+    if (!_recording) {
+      setState(() => _recording = true);
+
+      result = TfliteService.startAudioRecognizing();
+      result?.listen((event) {
+        recognition = event["recognitionResult"];
+      }).onDone(() {
+        setState(() => _recording = false);
+
+        final result = recognition.split(" ")[1];
+
+        if (result == StringResources.background) {
+          Navigator.pushReplacementNamed(
+            context,
+            RouteName.notFound,
+          );
+        } else {
+          context.read<DetailBloc>().add(
+                DetailGetInstrument(
+                  name: result,
+                  isFromRecognizing: true,
+                ),
+              );
+          Navigator.pushReplacementNamed(
+            context,
+            RouteName.detail,
+          );
+        }
+      });
+    }
   }
 
   @override
@@ -56,13 +99,17 @@ class _RecognizingScreenState extends State<RecognizingScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+                    color: _recording
+                        ? Colors.grey
+                        : Theme.of(context).primaryColor,
                     shape: BoxShape.circle,
                   ),
                   child: MaterialButton(
                     shape: const CircleBorder(),
-                    color: Theme.of(context).primaryColor,
-                    onPressed: () {},
+                    color: _recording
+                        ? Colors.grey
+                        : Theme.of(context).primaryColor,
+                    onPressed: _recorder,
                     elevation: 0,
                     padding: const EdgeInsets.all(32),
                     child: const Icon(

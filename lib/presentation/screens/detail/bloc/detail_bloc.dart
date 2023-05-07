@@ -25,11 +25,15 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
     emit(state.copyWith(status: Status.loading));
     try {
       final result = await _repo.findByName(event.name);
-      
+
       emit(state.copyWith(
         status: Status.success,
         instrument: result,
       ));
+
+      if (event.isFromRecognizing) {
+        _repo.insertOneToHistory(result);
+      }
     } catch (e) {
       emit(state.copyWith(status: Status.failure));
     }

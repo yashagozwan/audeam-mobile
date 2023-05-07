@@ -14,4 +14,7 @@ class MusicalInstrumentRepository {
 
   Future<MusicalInstrument> findByName(String name) =>
       _instrumentProvider.findByName(name);
+
+  Future<int> insertOneToHistory(MusicalInstrument instrument) =>
+      _sqliteProvider.insertOne(instrument);
 }

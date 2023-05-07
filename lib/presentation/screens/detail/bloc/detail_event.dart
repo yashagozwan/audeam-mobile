@@ -11,8 +11,10 @@ class DetailReset extends DetailEvent {
 
 class DetailGetInstrument extends DetailEvent {
   final String name;
+  final bool isFromRecognizing;
 
   const DetailGetInstrument({
     required this.name,
+    this.isFromRecognizing = false,
   });
 }
