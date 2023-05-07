@@ -7,5 +7,6 @@ part 'instruments_state.freezed.dart';
 class InstrumentsState with _$InstrumentsState {
   const factory InstrumentsState({
     @Default([]) Iterable<MusicalInstrument> instruments,
+    @Default(true) bool isFromFirebase,
   }) = _InstrumentsState;
 }

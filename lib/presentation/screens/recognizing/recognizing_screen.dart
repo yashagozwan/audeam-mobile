@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:audeam_mobile/core/constants/constants.dart';
 import 'package:audeam_mobile/core/constants/image_asset_path.dart';
 import 'package:audeam_mobile/core/services/tflite_service.dart';
@@ -71,24 +72,35 @@ class _RecognizingScreenState extends State<RecognizingScreen> {
       ),
       backgroundColor: Colors.grey.shade200,
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            opacity: 0.3,
-            image: AssetImage(
-              ImageAssetPath.network,
-            ),
-          ),
-        ),
+        decoration: const BoxDecoration(),
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                "What's Sound?",
-                style: TextStyle(
-                  fontSize: 32,
-                ),
-              ),
+              _recording
+                  ? DefaultTextStyle(
+                      style: const TextStyle(
+                        fontSize: 32,
+                        color: Colors.black,
+                      ),
+                      child: AnimatedTextKit(
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                            "Listening...",
+                            speed: const Duration(
+                              milliseconds: 100,
+                            ),
+                          ),
+                        ],
+                        repeatForever: true,
+                      ),
+                    )
+                  : const Text(
+                      "What's Sound?",
+                      style: TextStyle(
+                        fontSize: 32,
+                      ),
+                    ),
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.all(8),

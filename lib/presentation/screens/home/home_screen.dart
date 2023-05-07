@@ -80,21 +80,36 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              'Instruments',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Transform.translate(
+              offset: const Offset(-5, 0),
+              child: Row(
+                children: const [
+                  Icon(
+                    Icons.music_note_rounded,
+                    size: 30,
+                  ),
+                  Text(
+                    'Instruments',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          const Divider(),
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               final status = state.status;
-              final instruments = state.instruments.toList().sublist(0, 4);
+              var instruments = state.instruments;
+
+              if (instruments.isNotEmpty) {
+                instruments = instruments.toList().sublist(0, 4);
+              }
 
               if (status == Status.loading) {
                 return const Center(child: CircularProgressIndicator());
@@ -158,9 +173,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   const SizedBox(height: 16),
                                   Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                                    child: OutlinedButton(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                    ),
+                                    child: ElevatedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        side: BorderSide(
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
                                       onPressed: () {
                                         context.read<DetailBloc>().add(
                                               DetailGetInstrument(
@@ -186,39 +207,56 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: instruments.length,
                       ),
                       Card(
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(3, 3),
-                                      blurRadius: 8,
-                                      color: Colors.grey.shade300,
-                                    ),
-                                  ],
+                        clipBehavior: Clip.hardEdge,
+                        child: Touchable(
+                          color: Colors.black12,
+                          onPressed: () {
+                            context.read<InstrumentsBloc>().add(
+                                  InstrumentsSetInstruments(
+                                    instruments: state.instruments,
+                                    isFromFirebase: true,
+                                  ),
+                                );
+
+                            Navigator.pushNamed(
+                              context,
+                              RouteName.instruments,
+                            );
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: const Offset(3, 3),
+                                        blurRadius: 8,
+                                        color: Colors.grey.shade300,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Icon(
+                                    Icons.chevron_right_outlined,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                 ),
-                                child: Icon(
-                                  Icons.chevron_right_outlined,
-                                  color: Theme.of(context).primaryColor,
+                                const SizedBox(height: 8),
+                                const Text(
+                                  'View More\nInstruments',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
-                              const Text(
-                                'View More\nInstrument',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -231,25 +269,34 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           const SizedBox(height: 16),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              'History',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-              ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: const [
+                Icon(
+                  Icons.history,
+                  size: 30,
+                ),
+                SizedBox(width: 4),
+                Text(
+                  'History',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 16),
+          const Divider(),
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
-              var instruments = <MusicalInstrument>[];
+              Iterable<MusicalInstrument> instruments = [];
               final histories = state.histories;
 
-              if (histories.isNotEmpty) {
+              if (histories.isNotEmpty && histories.length >= 4) {
                 instruments =
-                    histories.toList().reversed.toList().sublist(0, 4);
+                    histories.toList().sublist(0, 4).toList().reversed;
               }
 
               if (instruments.isEmpty) {
@@ -278,7 +325,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }
               return SizedBox(
-                height: 120,
+                height: 320,
                 child: ListView(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   physics: const BouncingScrollPhysics(),
@@ -292,7 +339,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (context, index) {
                         final history = instruments.elementAt(index);
                         return SizedBox(
-                          width: 300,
+                          width: 200,
                           child: GestureDetector(
                             onTap: () {
                               context.read<DetailBloc>().add(
@@ -305,7 +352,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             child: Card(
                               clipBehavior: Clip.hardEdge,
-                              child: Row(
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   Container(
@@ -316,10 +363,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       history.image,
                                     ),
                                   ),
-                                  Flexible(
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 16, 16, 16),
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade100,
+                                      ),
+                                      padding: const EdgeInsets.all(16),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -330,7 +379,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .textTheme
                                                 .titleMedium
                                                 ?.copyWith(
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 18,
                                                 ),
                                           ),
                                           const SizedBox(height: 8),
@@ -341,22 +391,35 @@ class _HomeScreenState extends State<HomeScreen> {
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium
-                                                ?.copyWith(color: Colors.grey),
+                                                ?.copyWith(
+                                                  color: Colors.grey,
+                                                ),
+                                          ),
+                                          const SizedBox(height: 16),
+                                          Transform.translate(
+                                            offset: const Offset(-24, 0),
+                                            child: MaterialButton(
+                                              onPressed: () {
+                                                context.read<HomeBloc>().add(
+                                                      HomeDeleteOneHistory(
+                                                        id: history.id,
+                                                      ),
+                                                    );
+                                              },
+                                              shape: const CircleBorder(),
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(8),
+                                                child: Icon(
+                                                  Icons.delete,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                  Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.horizontal(
-                                        right: Radius.circular(16),
-                                      ),
-                                    ),
-                                    child: const Icon(
-                                      Icons.chevron_right_outlined,
-                                      color: Colors.white,
                                     ),
                                   ),
                                 ],
@@ -369,14 +432,23 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(width: 8),
                       itemCount: instruments.length,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          RouteName.instruments,
-                        );
-                      },
-                      child: Card(
+                    Card(
+                      clipBehavior: Clip.hardEdge,
+                      child: Touchable(
+                        color: Colors.black12,
+                        onPressed: () {
+                          context.read<InstrumentsBloc>().add(
+                                InstrumentsSetInstruments(
+                                  instruments: histories.toList().reversed,
+                                  isFromFirebase: false,
+                                ),
+                              );
+
+                          Navigator.pushNamed(
+                            context,
+                            RouteName.instruments,
+                          );
+                        },
                         child: Container(
                           alignment: Alignment.center,
                           padding: const EdgeInsets.all(16),
@@ -402,6 +474,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               const SizedBox(height: 8),
+                              const Text(
+                                'View More\nHistory',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                             ],
                           ),
                         ),

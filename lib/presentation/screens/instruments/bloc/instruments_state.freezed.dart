@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$InstrumentsState {
   Iterable<MusicalInstrument> get instruments =>
       throw _privateConstructorUsedError;
+  bool get isFromFirebase => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $InstrumentsStateCopyWith<InstrumentsState> get copyWith =>
@@ -30,7 +31,7 @@ abstract class $InstrumentsStateCopyWith<$Res> {
           InstrumentsState value, $Res Function(InstrumentsState) then) =
       _$InstrumentsStateCopyWithImpl<$Res, InstrumentsState>;
   @useResult
-  $Res call({Iterable<MusicalInstrument> instruments});
+  $Res call({Iterable<MusicalInstrument> instruments, bool isFromFirebase});
 }
 
 /// @nodoc
@@ -47,12 +48,17 @@ class _$InstrumentsStateCopyWithImpl<$Res, $Val extends InstrumentsState>
   @override
   $Res call({
     Object? instruments = null,
+    Object? isFromFirebase = null,
   }) {
     return _then(_value.copyWith(
       instruments: null == instruments
           ? _value.instruments
           : instruments // ignore: cast_nullable_to_non_nullable
               as Iterable<MusicalInstrument>,
+      isFromFirebase: null == isFromFirebase
+          ? _value.isFromFirebase
+          : isFromFirebase // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -65,7 +71,7 @@ abstract class _$$_InstrumentsStateCopyWith<$Res>
       __$$_InstrumentsStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Iterable<MusicalInstrument> instruments});
+  $Res call({Iterable<MusicalInstrument> instruments, bool isFromFirebase});
 }
 
 /// @nodoc
@@ -80,12 +86,17 @@ class __$$_InstrumentsStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? instruments = null,
+    Object? isFromFirebase = null,
   }) {
     return _then(_$_InstrumentsState(
       instruments: null == instruments
           ? _value.instruments
           : instruments // ignore: cast_nullable_to_non_nullable
               as Iterable<MusicalInstrument>,
+      isFromFirebase: null == isFromFirebase
+          ? _value.isFromFirebase
+          : isFromFirebase // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -93,15 +104,19 @@ class __$$_InstrumentsStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_InstrumentsState implements _InstrumentsState {
-  const _$_InstrumentsState({this.instruments = const []});
+  const _$_InstrumentsState(
+      {this.instruments = const [], this.isFromFirebase = true});
 
   @override
   @JsonKey()
   final Iterable<MusicalInstrument> instruments;
+  @override
+  @JsonKey()
+  final bool isFromFirebase;
 
   @override
   String toString() {
-    return 'InstrumentsState(instruments: $instruments)';
+    return 'InstrumentsState(instruments: $instruments, isFromFirebase: $isFromFirebase)';
   }
 
   @override
@@ -110,12 +125,14 @@ class _$_InstrumentsState implements _InstrumentsState {
         (other.runtimeType == runtimeType &&
             other is _$_InstrumentsState &&
             const DeepCollectionEquality()
-                .equals(other.instruments, instruments));
+                .equals(other.instruments, instruments) &&
+            (identical(other.isFromFirebase, isFromFirebase) ||
+                other.isFromFirebase == isFromFirebase));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(instruments));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(instruments), isFromFirebase);
 
   @JsonKey(ignore: true)
   @override
@@ -126,10 +143,13 @@ class _$_InstrumentsState implements _InstrumentsState {
 
 abstract class _InstrumentsState implements InstrumentsState {
   const factory _InstrumentsState(
-      {final Iterable<MusicalInstrument> instruments}) = _$_InstrumentsState;
+      {final Iterable<MusicalInstrument> instruments,
+      final bool isFromFirebase}) = _$_InstrumentsState;
 
   @override
   Iterable<MusicalInstrument> get instruments;
+  @override
+  bool get isFromFirebase;
   @override
   @JsonKey(ignore: true)
   _$$_InstrumentsStateCopyWith<_$_InstrumentsState> get copyWith =>

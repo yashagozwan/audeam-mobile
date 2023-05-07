@@ -17,4 +17,6 @@ class MusicalInstrumentRepository {
 
   Future<int> insertOneToHistory(MusicalInstrument instrument) =>
       _sqliteProvider.insertOne(instrument);
+
+  Future<int> deleteOneInLocal(String id) => _sqliteProvider.deleteOne(id);
 }

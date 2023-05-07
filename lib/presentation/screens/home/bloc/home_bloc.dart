@@ -10,6 +10,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(const HomeState()) {
     on<HomeReset>(_reset);
     on<HomeStarted>(_started);
+    on<HomeDeleteOneHistory>(_deleteOneHistory);
   }
 
   void _reset(
@@ -35,5 +36,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } on FirebaseException {
       emit(state.copyWith(status: Status.failure));
     }
+  }
+
+  void _deleteOneHistory(
+    HomeDeleteOneHistory event,
+    Emitter<HomeState> emit,
+  ) async {
+    await _repository.deleteOneInLocal(event.id);
+    final histories = await _repository.findAllLocal();
+    emit(state.copyWith(
+      histories: histories,
+    ));
   }
 }

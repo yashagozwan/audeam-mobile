@@ -47,6 +47,8 @@ dependencies:
   url_launcher: ^6.1.10
   sqflite: ^2.2.8+1
   path: ^1.8.2
+  sliding_up_panel: ^2.0.0+1
+  animated_text_kit: ^4.2.2
 
 dev_dependencies:
   flutter_test:

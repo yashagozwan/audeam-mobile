@@ -8,8 +8,10 @@ abstract class InstrumentsEvent {
 
 class InstrumentsSetInstruments extends InstrumentsEvent {
   final Iterable<MusicalInstrument> instruments;
+  final bool isFromFirebase;
 
   const InstrumentsSetInstruments({
     required this.instruments,
+    this.isFromFirebase = true,
   });
 }

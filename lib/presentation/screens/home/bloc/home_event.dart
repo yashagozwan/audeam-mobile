@@ -12,3 +12,11 @@ class HomeReset extends HomeEvent {
 class HomeStarted extends HomeEvent {
   const HomeStarted();
 }
+
+class HomeDeleteOneHistory extends HomeEvent {
+  final String id;
+
+  const HomeDeleteOneHistory({
+    required this.id,
+  });
+}

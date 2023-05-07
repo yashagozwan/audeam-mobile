@@ -28,5 +28,10 @@ void main() {
       final instruments = await sqliteProvider.findAll();
       print(instruments);
     });
+
+    test('test delete one', () async {
+      final result = await sqliteProvider.deleteOne('1');
+      print(result);
+    });
   });
 }

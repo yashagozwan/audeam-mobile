@@ -45,4 +45,13 @@ class SqliteProvider {
     final instruments = await db.query(histories);
     return instruments.map((e) => MusicalInstrument.fromMap(e));
   }
+
+  Future<int> deleteOne(String id) async {
+    final db = await _database;
+    return await db.delete(
+      histories,
+      where: 'id=?',
+      whereArgs: [id],
+    );
+  }
 }
