@@ -28,7 +28,7 @@ class InstrumentsBloc extends Bloc<InstrumentsEvent, InstrumentsState> {
 
       emit(state.copyWith(
         status: Status.success,
-        instruments: instruments.toList().reversed,
+        instruments: instruments,
         isFromFirebase: event.isFromFirebase,
       ));
     } catch (error) {
