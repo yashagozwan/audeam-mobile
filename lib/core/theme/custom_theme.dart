@@ -31,11 +31,18 @@ class CustomTheme {
       ),
     );
 
+    final snackBarTheme = themeData.snackBarTheme.copyWith(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+    );
+
     return themeData.copyWith(
       scaffoldBackgroundColor: Colors.grey.shade50,
       elevatedButtonTheme: elevatedButton,
       cardTheme: cardTheme,
       outlinedButtonTheme: outlinedButton,
+      snackBarTheme: snackBarTheme,
     );
   }
 }

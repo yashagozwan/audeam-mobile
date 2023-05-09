@@ -1,9 +1,7 @@
 import 'package:audeam_mobile/core/constants/constants.dart';
-import 'package:audeam_mobile/core/constants/image_asset_path.dart';
 import 'package:audeam_mobile/core/utils/utils.dart';
 import 'package:audeam_mobile/presentation/screens/screens.dart';
-import 'package:audeam_mobile/presentation/widgets/center_loading.dart';
-import 'package:audeam_mobile/presentation/widgets/custom_app_bar.dart';
+import 'package:audeam_mobile/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -14,6 +12,7 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<FavoritesBloc>().add(const FavoritesStarted());
     final textTheme = Theme.of(context).textTheme;
 
     return WillPopScope(
@@ -40,11 +39,62 @@ class DetailScreen extends StatelessWidget {
                 body: Column(
                   children: [
                     const SizedBox(height: 16),
-                    SizedBox(
-                      height: 300,
-                      child: Image.network(
-                        instrument.image,
-                      ),
+                    Stack(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 300,
+                          child: Image.network(
+                            instrument.image,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: BlocBuilder<FavoritesBloc, FavoritesState>(
+                              builder: (context, state) {
+                                final favorites = state.instruments
+                                    .where((e) => e.name == instrument.name);
+
+                                final iconData = favorites.isEmpty
+                                    ? Icons.favorite_border_outlined
+                                    : Icons.favorite;
+
+                                final onPressed = favorites.isEmpty
+                                    ? () {
+                                        context.read<FavoritesBloc>().add(
+                                              FavoritesAddFavorite(
+                                                instrument: instrument,
+                                              ),
+                                            );
+                                      }
+                                    : () {
+                                        context.read<FavoritesBloc>().add(
+                                              FavoritesDeleteFavorite(
+                                                name: instrument.name,
+                                              ),
+                                            );
+                                      };
+
+                                return MaterialButton(
+                                  minWidth: 50,
+                                  height: 50,
+                                  shape: const CircleBorder(),
+                                  padding: EdgeInsets.zero,
+                                  elevation: 0,
+                                  color: Colors.red,
+                                  onPressed: onPressed,
+                                  child: Icon(
+                                    iconData,
+                                    color: Colors.white,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -107,7 +157,7 @@ class DetailScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 24),
-                              ElevatedButton(
+                              OutlinedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white,
                                   foregroundColor: Colors.black,

@@ -1,8 +1,7 @@
 import 'package:audeam_mobile/core/constants/constants.dart';
 import 'package:audeam_mobile/data/models/models.dart';
 import 'package:audeam_mobile/presentation/screens/screens.dart';
-import 'package:audeam_mobile/presentation/widgets/custom_app_bar.dart';
-import 'package:audeam_mobile/presentation/widgets/touchable.dart';
+import 'package:audeam_mobile/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,8 +26,20 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: StringResources.appName,
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.read<FavoritesBloc>().add(const FavoritesStarted());
+              Navigator.pushNamed(context, RouteName.favorites);
+            },
+            icon: const Icon(
+              Icons.favorite,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
       body: ListView(
         physics: const BouncingScrollPhysics(),
@@ -212,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.black12,
                           onPressed: () {
                             context.read<InstrumentsBloc>().add(
-                                  InstrumentsSetInstruments(
+                                  InstrumentsGetInstruments(
                                     instruments: state.instruments,
                                     isFromFirebase: true,
                                   ),
@@ -291,12 +302,13 @@ class _HomeScreenState extends State<HomeScreen> {
           const Divider(),
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
-              Iterable<MusicalInstrument> instruments = [];
               final histories = state.histories;
+              Iterable<MusicalInstrument> instruments = [];
 
               if (histories.isNotEmpty && histories.length >= 4) {
-                instruments =
-                    histories.toList().sublist(0, 4).toList().reversed;
+                instruments = histories.toList().sublist(0, 4);
+              } else {
+                instruments = histories;
               }
 
               if (instruments.isEmpty) {
@@ -304,20 +316,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   margin: const EdgeInsets.all(16),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
+                      children: const [
+                        Icon(
                           Icons.do_not_disturb_alt_rounded,
                           color: Colors.grey,
+                          size: 30,
                         ),
-                        const SizedBox(width: 8),
+                        SizedBox(height: 8),
                         Text(
                           'Empty',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(color: Colors.grey),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                            color: Colors.grey,
+                          ),
                         ),
                       ],
                     ),
@@ -400,11 +414,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                             offset: const Offset(-24, 0),
                                             child: MaterialButton(
                                               onPressed: () {
-                                                context.read<HomeBloc>().add(
-                                                      HomeDeleteOneHistory(
-                                                        id: history.id,
-                                                      ),
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return CustomAlertDialog(
+                                                      onPressedNo: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      onPressedYes: () {
+                                                        context
+                                                            .read<HomeBloc>()
+                                                            .add(
+                                                              HomeDeleteOneHistory(
+                                                                id: history.id,
+                                                              ),
+                                                            );
+                                                        Navigator.pop(context);
+                                                      },
                                                     );
+                                                  },
+                                                );
                                               },
                                               shape: const CircleBorder(),
                                               color: Theme.of(context)
@@ -438,7 +467,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.black12,
                         onPressed: () {
                           context.read<InstrumentsBloc>().add(
-                                InstrumentsSetInstruments(
+                                InstrumentsGetInstruments(
                                   instruments: histories.toList().reversed,
                                   isFromFirebase: false,
                                 ),

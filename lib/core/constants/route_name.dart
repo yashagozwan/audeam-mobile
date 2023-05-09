@@ -7,4 +7,5 @@ class RouteName {
   static const detail = '/detail';
   static const notFound = '/notFound';
   static const instruments = '/instruments';
+  static const favorites = '/favorites';
 }

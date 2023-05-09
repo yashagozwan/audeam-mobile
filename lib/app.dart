@@ -15,6 +15,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => DetailBloc()),
         BlocProvider(create: (context) => RecognizingBloc()),
         BlocProvider(create: (context) => InstrumentsBloc()),
+        BlocProvider(create: (context) => FavoritesBloc(context)),
       ],
       child: MaterialApp(
         theme: CustomTheme.light,
@@ -26,7 +27,8 @@ class App extends StatelessWidget {
           RouteName.recognizing: (context) => const RecognizingScreen(),
           RouteName.detail: (context) => const DetailScreen(),
           RouteName.notFound: (context) => const NotFoundScreen(),
-          RouteName.instruments: (context) => const InstrumentsScreen()
+          RouteName.instruments: (context) => const InstrumentsScreen(),
+          RouteName.favorites: (context) => const FavoritesScreen(),
         },
       ),
     );
