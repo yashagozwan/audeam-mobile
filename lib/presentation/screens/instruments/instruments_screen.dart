@@ -9,6 +9,8 @@ class InstrumentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isFromFirebase = context.read<InstrumentsBloc>().state.isFromFirebase;
+    final title = isFromFirebase ? 'History' : 'Instruments';
     return WillPopScope(
       onWillPop: () async {
         context.read<HomeBloc>().add(const HomeStarted());
@@ -16,7 +18,7 @@ class InstrumentsScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: CustomAppBar(
-          title: 'Instruments',
+          title: title,
           actions: [
             BlocBuilder<InstrumentsBloc, InstrumentsState>(
               builder: (context, state) {
