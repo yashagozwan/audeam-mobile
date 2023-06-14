@@ -129,11 +129,26 @@ class FavoritesScreen extends StatelessWidget {
                         const SizedBox(height: 8),
                         ElevatedButton(
                           onPressed: () {
-                            context.read<FavoritesBloc>().add(
-                                  FavoritesDeleteFavorite(
-                                    name: instrument.name,
-                                  ),
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CustomAlertDialog(
+                                  onPressedNo: () {
+                                    Navigator.pop(context);
+                                  },
+                                  onPressedYes: () {
+                                    context.read<FavoritesBloc>().add(
+                                          FavoritesDeleteFavorite(
+                                            name: instrument.name,
+                                          ),
+                                        );
+
+                                    Navigator.pop(context);
+                                  },
+                                  title: 'Are you sure want to delete',
                                 );
+                              },
+                            );
                           },
                           child: const Text('Delete'),
                         ),
