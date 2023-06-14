@@ -7,6 +7,6 @@ class SharedProvider {
 
   Future<void> saveUserId(String userId) async {
     final shared = await _shared;
-    final result = shared.setString(this.userId, userId);
+    shared.setString(this.userId, userId);
   }
 }

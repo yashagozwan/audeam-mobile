@@ -51,13 +51,13 @@ class FavoritesScreen extends StatelessWidget {
           final instruments = state.instruments;
 
           if (instruments.isEmpty) {
-            return Center(
+            return const Center(
               child: Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(24),
+                  padding: EdgeInsets.all(24),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Icon(
                         Icons.not_interested_outlined,
                         size: 50,
@@ -65,7 +65,7 @@ class FavoritesScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'No Favourites',
+                        'No Favorites',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,

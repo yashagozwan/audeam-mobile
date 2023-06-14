@@ -69,9 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Column(
+              child: const Column(
                 mainAxisSize: MainAxisSize.min,
-                children: const [
+                children: [
                   Icon(
                     Icons.mic,
                     color: Colors.white,
@@ -95,8 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Transform.translate(
               offset: const Offset(-5, 0),
-              child: Row(
-                children: const [
+              child: const Row(
+                children: [
                   Icon(
                     Icons.music_note_rounded,
                     size: 30,
@@ -280,10 +280,10 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Row(
-              children: const [
+              children: [
                 Icon(
                   Icons.history,
                   size: 30,
@@ -312,13 +312,13 @@ class _HomeScreenState extends State<HomeScreen> {
               }
 
               if (instruments.isEmpty) {
-                return Card(
-                  margin: const EdgeInsets.all(16),
+                return const Card(
+                  margin: EdgeInsets.all(16),
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.do_not_disturb_alt_rounded,
                           color: Colors.grey,

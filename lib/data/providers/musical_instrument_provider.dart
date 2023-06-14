@@ -9,7 +9,7 @@ class MusicalInstrumentProvider {
 
   Future<void> insertOne(MusicalInstrument instrument) async {
     try {
-      final result = await collection.add(instrument.toJson());
+      await collection.add(instrument.toJson());
     } on FirebaseFirestore {
       rethrow;
     }

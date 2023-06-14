@@ -74,13 +74,13 @@ class InstrumentsScreen extends StatelessWidget {
 
             if (status == Status.success) {
               if (instruments.isEmpty && !state.isFromFirebase) {
-                return Center(
+                return const Center(
                   child: Card(
                     child: Padding(
-                      padding: const EdgeInsets.all(32),
+                      padding: EdgeInsets.all(32),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: const [
+                        children: [
                           Icon(
                             Icons.not_interested_rounded,
                             size: 50,

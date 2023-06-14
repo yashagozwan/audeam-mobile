@@ -20,8 +20,7 @@ void main() {
         image: 'http://google.com/image.jpg',
       );
 
-      final result = await sqliteProvider.insertOne(instrument);
-      print(result);
+      await sqliteProvider.insertOne(instrument);
     });
 
     test('find all instrument', () async {

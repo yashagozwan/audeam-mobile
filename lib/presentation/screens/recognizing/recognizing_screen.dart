@@ -1,6 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:audeam_mobile/core/constants/constants.dart';
-import 'package:audeam_mobile/core/constants/image_asset_path.dart';
 import 'package:audeam_mobile/core/services/tflite_service.dart';
 import 'package:audeam_mobile/presentation/screens/screens.dart';
 import 'package:audeam_mobile/presentation/widgets/custom_app_bar.dart';
